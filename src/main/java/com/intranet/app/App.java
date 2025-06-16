@@ -8,6 +8,7 @@ public class App {
         FlatArcOrangeIJTheme.setup();
         
         AppContext.initialize();
+        
         new LoginView().setVisible(true);
     }
 }

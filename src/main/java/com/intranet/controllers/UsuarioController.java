@@ -2,6 +2,7 @@ package com.intranet.controllers;
 
 import com.intranet.db.DBConnection;
 import com.intranet.models.Usuario;
+import com.intranet.utils.AlertUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,6 +23,7 @@ public class UsuarioController {
             stmt.setString(1, correo);
             stmt.setString(2, contraseña);
             ResultSet rs = stmt.executeQuery();
+            
             if (rs.next()) {
                 return new Usuario(
                     rs.getInt("id"),
@@ -33,8 +35,10 @@ public class UsuarioController {
                     rs.getTimestamp("creado_en").toLocalDateTime()
                 );
             }
+            
         } catch (SQLException e) {
             System.out.println("Error al hacer login: " + e.getMessage());
+            AlertUtils.showWarning("Hubo un error al crear el usuario");
         }
         return null;
     }

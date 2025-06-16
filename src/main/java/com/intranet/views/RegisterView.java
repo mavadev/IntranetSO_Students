@@ -193,6 +193,8 @@ public class RegisterView extends javax.swing.JFrame {
         
         // Crear el usuario
         Usuario nuevoUsuario = new Usuario(nombre,apellido,correo,password, "alumno");
+        
+        // Registramos el nuevo usuario en la base de datos
         Boolean creadoCorrectamente = AppContext.getUsuarioController().register(nuevoUsuario);
 
         // En caso se cree correctamente

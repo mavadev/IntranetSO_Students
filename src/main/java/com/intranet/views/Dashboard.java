@@ -7,7 +7,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     public void setUsuario(String name){
-        txtNombreUsuario.setText(name);
+        labelNombreUsuario.setText(name);
     }
 
     @SuppressWarnings("unchecked")
@@ -16,7 +16,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         background = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNombreUsuario = new javax.swing.JLabel();
+        labelNombreUsuario = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -25,7 +25,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Bienvenido");
 
-        txtNombreUsuario.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        labelNombreUsuario.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
 
         btnCerrarSesion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCerrarSesion.setText("Cerrar Sesión");
@@ -42,7 +42,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombreUsuario)
+                    .addComponent(labelNombreUsuario)
                     .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
@@ -58,7 +58,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
-                .addComponent(txtNombreUsuario)
+                .addComponent(labelNombreUsuario)
                 .addContainerGap(469, Short.MAX_VALUE))
         );
 
@@ -81,7 +81,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         new LoginView().setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     public static void main(String args[]) {
@@ -97,6 +97,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel background;
     private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel txtNombreUsuario;
+    private javax.swing.JLabel labelNombreUsuario;
     // End of variables declaration//GEN-END:variables
 }

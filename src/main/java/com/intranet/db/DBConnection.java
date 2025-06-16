@@ -18,7 +18,6 @@ public class DBConnection {
             connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
         } catch(SQLException exception){
             System.out.println("Error al conectar: " + exception.getMessage());
-            exception.printStackTrace();
         }
     }
     
@@ -39,7 +38,7 @@ public class DBConnection {
         try {
             if (connection != null) connection.close();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            System.out.println("Error al cerrar la conexion: " + exception.getMessage());
         }
     }
 }

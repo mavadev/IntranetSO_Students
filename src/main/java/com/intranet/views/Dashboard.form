@@ -47,7 +47,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtNombreUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelNombreUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -67,7 +67,7 @@
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="txtNombreUsuario" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNombreUsuario" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="469" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -82,7 +82,7 @@
             <Property name="text" type="java.lang.String" value="Bienvenido"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="txtNombreUsuario">
+        <Component class="javax.swing.JLabel" name="labelNombreUsuario">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="36" style="0"/>

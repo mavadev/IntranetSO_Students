@@ -31,6 +31,7 @@ public class LoginView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Autenticación de Usuario");
+        setPreferredSize(new java.awt.Dimension(1280, 720));
 
         background.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -77,8 +78,6 @@ public class LoginView extends javax.swing.JFrame {
 
         jLabel.setText("No tienes una cuenta?");
 
-        txtLoginPassword.setPreferredSize(new java.awt.Dimension(64, 22));
-
         javax.swing.GroupLayout panelLoginLayout = new javax.swing.GroupLayout(panelLogin);
         panelLogin.setLayout(panelLoginLayout);
         panelLoginLayout.setHorizontalGroup(
@@ -92,7 +91,7 @@ public class LoginView extends javax.swing.JFrame {
                         .addComponent(txtLoginCorreo)
                         .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                         .addComponent(redirectContraseña, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtLoginPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtLoginPassword))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLoginLayout.createSequentialGroup()
                         .addComponent(jLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -203,7 +202,7 @@ public class LoginView extends javax.swing.JFrame {
     private void redirectRegistroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_redirectRegistroMouseClicked
         RegisterView registerView = new RegisterView();
         registerView.setVisible(true);
-        this.dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_redirectRegistroMouseClicked
 
     public static void main(String args[]) {        
