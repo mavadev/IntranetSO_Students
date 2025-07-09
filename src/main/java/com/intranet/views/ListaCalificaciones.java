@@ -1,10 +1,10 @@
 package com.intranet.views;
 
 import com.intranet.app.AppContext;
-import com.intranet.models.Curso;
 import com.intranet.models.Docente;
 import com.intranet.models.Estudiante;
-import com.intranet.models.TareaAsignada;
+import com.intranet.models.Entrega;
+
 import com.intranet.models.Usuario;
 import com.intranet.utils.AlertUtils;
 import java.util.ArrayList;
@@ -13,17 +13,25 @@ import javax.swing.table.DefaultTableModel;
 
 public class ListaCalificaciones extends javax.swing.JPanel {
     private JPanel contentPanel;
-    DefaultTableModel modeloPendientes = new DefaultTableModel();
+    DefaultTableModel modeloCalificaciones = new DefaultTableModel();
 
     public ListaCalificaciones(JPanel contentPanel) {
         initComponents();
         this.contentPanel = contentPanel;
 
         boolean esDocente = restringirDocentes();
-        if(!esDocente){
-            configurarTabla();
-            obtenerPendientes();
+        if(esDocente){
+            AlertUtils.showWarning("Acceso solo para estudiantes.");
+            Dashboard layoutDashboard = new Dashboard(); 
+            contentPanel.removeAll();
+            contentPanel.add(layoutDashboard);
+            contentPanel.revalidate();
+            contentPanel.repaint();
+            return;
         }
+        
+        configurarTabla();
+        obtenerCalifaciones();
     }
     
     private boolean restringirDocentes(){
@@ -33,35 +41,37 @@ public class ListaCalificaciones extends javax.swing.JPanel {
     }
     
     private void configurarTabla(){
-        // TABLA DE PENDIENTES
-        modeloPendientes.addColumn("ID de Tarea");
-        modeloPendientes.addColumn("Titulo");
-        modeloPendientes.addColumn("Curso");
-        modeloPendientes.addColumn("Fecha de Entrega");
+        // Tabla de Califaciones
+        modeloCalificaciones.addColumn("ID de Calificacion");
+        modeloCalificaciones.addColumn("Titulo de Tarea");
+        modeloCalificaciones.addColumn("Curso");
+        modeloCalificaciones.addColumn("Fecha de Asignacion");
+        modeloCalificaciones.addColumn("Califacion");
 
-        tablaPendientes.setModel(modeloPendientes);
+        tablaCalificaciones.setModel(modeloCalificaciones);
     }
     
-    private void obtenerPendientes(){
+    private void obtenerCalifaciones(){
         // Obtener usuario actual
         Estudiante estudiante = (Estudiante) AppContext.getInstance().getUsuarioActual();
 
-        // Obtener cursos segun el rol
-        ArrayList<TareaAsignada> listaPendientes = 
-            AppContext.getTareaAsignadaController().obtenerPendientesEstudiantePorID(estudiante.getIdEstudiante());
+        // Obtener califaciones del estudiante
+        ArrayList<Entrega> listaEntregas = 
+            AppContext.getEntregaController().obtenerCalificacionesPorEstudianteID(estudiante.getIdEstudiante());
 
         // Limpiar la tabla
-        modeloPendientes.setRowCount(0);
+        modeloCalificaciones.setRowCount(0);
 
-        // Insertar cada pendiente a la tabla
-        for (TareaAsignada pendiente : listaPendientes) {
+        // Insertar cada califacion a la tabla
+        for (Entrega entrega : listaEntregas) {
             Object[] fila = {
-                pendiente.getIdAsignacion(),
-                pendiente.getTituloTarea(),
-                pendiente.getNombreCurso(),
-                pendiente.getFechaEntrega()
+                entrega.getIdAsignacion(),
+                entrega.getTituloTarea(),
+                entrega.getNombreCurso(),
+                entrega.getFechaEntrega(),
+                entrega.getCalificacion()
             };
-            modeloPendientes.addRow(fila);
+            modeloCalificaciones.addRow(fila);
         }
     }
     
@@ -71,13 +81,13 @@ public class ListaCalificaciones extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaPendientes = new javax.swing.JTable();
+        tablaCalificaciones = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
-        btnIrAPendiente = new javax.swing.JButton();
+        btnIrAEntrega = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1054, 720));
 
-        tablaPendientes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaCalificaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -88,16 +98,16 @@ public class ListaCalificaciones extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(tablaPendientes);
+        jScrollPane2.setViewportView(tablaCalificaciones);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel9.setText("Mis Pendientes");
+        jLabel9.setText("Mis Calificaciones");
 
-        btnIrAPendiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnIrAPendiente.setText("IR A PENDIENTE");
-        btnIrAPendiente.addActionListener(new java.awt.event.ActionListener() {
+        btnIrAEntrega.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnIrAEntrega.setText("IR A ENTREGA");
+        btnIrAEntrega.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIrAPendienteActionPerformed(evt);
+                btnIrAEntregaActionPerformed(evt);
             }
         });
 
@@ -111,7 +121,7 @@ public class ListaCalificaciones extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnIrAPendiente, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnIrAEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(72, Short.MAX_VALUE))
         );
@@ -121,10 +131,10 @@ public class ListaCalificaciones extends javax.swing.JPanel {
                 .addGap(51, 51, 51)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(btnIrAPendiente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnIrAEntrega, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -139,9 +149,9 @@ public class ListaCalificaciones extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnIrAPendienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrAPendienteActionPerformed
+    private void btnIrAEntregaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrAEntregaActionPerformed
         // Obtenemos la fila seleccionada
-        int fila = tablaPendientes.getSelectedRow();
+        int fila = tablaCalificaciones.getSelectedRow();
 
         if (fila == -1) {
             AlertUtils.showWarning("Debes seleccionar un registro de la tabla");
@@ -149,22 +159,22 @@ public class ListaCalificaciones extends javax.swing.JPanel {
         }
 
         // Obtener el ID del registro (primera columna)
-        String id_pendiente = tablaPendientes.getValueAt(fila, 0).toString();
+        String id_pendiente = tablaCalificaciones.getValueAt(fila, 0).toString();
 
         // Mostrar el layout de curso pasando el curso ID
-        LayoutCurso layoutCurso = new LayoutCurso(id_pendiente); 
+        EntregaVista panelEntrega = new EntregaVista(id_pendiente); 
         contentPanel.removeAll();
-        contentPanel.add(layoutCurso);
+        contentPanel.add(panelEntrega);
         contentPanel.revalidate();
         contentPanel.repaint();
-    }//GEN-LAST:event_btnIrAPendienteActionPerformed
+    }//GEN-LAST:event_btnIrAEntregaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIrAPendiente;
+    private javax.swing.JButton btnIrAEntrega;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tablaPendientes;
+    private javax.swing.JTable tablaCalificaciones;
     // End of variables declaration//GEN-END:variables
 }

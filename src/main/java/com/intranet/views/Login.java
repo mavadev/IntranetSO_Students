@@ -200,6 +200,7 @@ public class Login extends javax.swing.JFrame {
             AlertUtils.showWarning(resultadoCorreo);
             return;
         }
+        
         boolean passwordValido = Validador.esPasswordValido(password);
         if (!passwordValido) {
             AlertUtils.showWarning("Debe ser un password válido");

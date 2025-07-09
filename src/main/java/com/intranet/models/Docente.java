@@ -1,5 +1,6 @@
 package com.intranet.models;
 
+import com.intranet.utils.Format;
 import java.time.LocalDate;
 
 public class Docente extends Usuario{
@@ -72,5 +73,17 @@ public class Docente extends Usuario{
     }
     public String getEspecialidad() {
         return especialidad;
+    }
+    
+    public String obtenerDatos(){
+        return 
+            "Datos de Docente: "
+            + "\nID: " + idDocente
+            + "\nNombres: " + nombres
+            + "\nApellidos: " + apellidos
+            + "\nDNI: " + dni
+            + "\nCelular: " + celular
+            + "\nDireccion: " + direccion
+            + "\nEspecialidad: " + especialidad;
     }
 }

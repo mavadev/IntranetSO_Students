@@ -3,6 +3,7 @@ package com.intranet.app;
 import com.intranet.controllers.ContenidoCursoController;
 import com.intranet.controllers.CursoController;
 import com.intranet.controllers.DocenteController;
+import com.intranet.controllers.EntregaController;
 import com.intranet.db.DBConnection;
 import com.intranet.controllers.EstudianteController;
 import com.intranet.controllers.TareaAsignadaController;
@@ -21,7 +22,7 @@ public class AppContext {
     private static DocenteController docenteController;
     private static ContenidoCursoController contenidoCursoController;
     private static TareaAsignadaController tareaAsignadaController;
-    // private static AdministradorController administradorController;
+    private static EntregaController entregaController;
 
     public static void initialize() {
         instance = new AppContext();
@@ -63,5 +64,8 @@ public class AppContext {
     }
     public static TareaAsignadaController getTareaAsignadaController() {
         return tareaAsignadaController;
+    }
+    public static EntregaController getEntregaController() {
+        return entregaController;
     }
 }

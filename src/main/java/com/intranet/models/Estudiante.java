@@ -1,4 +1,5 @@
 package com.intranet.models;
+import com.intranet.utils.Format;
 import java.time.LocalDate;
 
 public class Estudiante extends Usuario {    
@@ -35,6 +36,19 @@ public class Estudiante extends Usuario {
         this.numeroGrado = numGrado;
     }
     
+    // ESTUDIANTE - LISTADO
+    public Estudiante(
+        String idEstudiante,
+        String nombres, 
+        String apellidos, 
+        String dni
+    ) {
+        this.idEstudiante = idEstudiante;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.dni = dni;
+    }
+    
     // Getters
     public String getIdEstudiante() {
         return idEstudiante;
@@ -68,5 +82,16 @@ public class Estudiante extends Usuario {
     }
     public String getLetraSeccion() {
         return letraSeccion;
+    }
+    
+    public String obtenerDatos() {
+        return 
+            "Datos de Estudiante: "
+            + "\nID: " + idEstudiante
+            + "\nNombres: " + nombres
+            + "\nApellidos: " + apellidos
+            + "\nDNI: " + dni
+            + "\nDireccion: " + direccion
+            + "\nGrado: " + Format.numGradoToStrGrado(numeroGrado);
     }
 }

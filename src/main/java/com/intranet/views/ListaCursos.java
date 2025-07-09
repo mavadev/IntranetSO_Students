@@ -109,10 +109,10 @@ public class ListaCursos extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(58, 58, 58)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(699, 699, 699)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnIrACurso, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(72, Short.MAX_VALUE))
@@ -154,7 +154,7 @@ public class ListaCursos extends javax.swing.JPanel {
         String id_curso = tablaCursos.getValueAt(fila, 0).toString();
 
         // Mostrar el layout de curso pasando el curso ID
-        LayoutCurso layoutCurso = new LayoutCurso(id_curso); 
+        LayoutCurso layoutCurso = new LayoutCurso(id_curso, contentPanel); 
         contentPanel.removeAll();
         contentPanel.add(layoutCurso);
         contentPanel.revalidate();

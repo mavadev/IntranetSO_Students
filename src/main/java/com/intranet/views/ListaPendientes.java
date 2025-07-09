@@ -1,7 +1,6 @@
 package com.intranet.views;
 
 import com.intranet.app.AppContext;
-import com.intranet.models.Curso;
 import com.intranet.models.Docente;
 import com.intranet.models.Estudiante;
 import com.intranet.models.TareaAsignada;
@@ -11,27 +10,35 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-public class ListaPendiente extends javax.swing.JPanel {
+public class ListaPendientes extends javax.swing.JPanel {
     private JPanel contentPanel;
     DefaultTableModel modeloPendientes = new DefaultTableModel();
 
-    public ListaPendiente(JPanel contentPanel) {
+    public ListaPendientes(JPanel contentPanel) {
         initComponents();
         this.contentPanel = contentPanel;
 
         boolean esDocente = restringirDocentes();
-        if(!esDocente){
-            configurarTabla();
-            obtenerPendientes();
+        if(esDocente){
+            AlertUtils.showWarning("Acceso solo para estudiantes.");
+            Dashboard layoutDashboard = new Dashboard(); 
+            contentPanel.removeAll();
+            contentPanel.add(layoutDashboard);
+            contentPanel.revalidate();
+            contentPanel.repaint();
+            return;
         }
+        
+        configurarTabla();
+        obtenerPendientes();
     }
-    
+  
     private boolean restringirDocentes(){
         // Obtener usuario actual
         Usuario usuario = AppContext.getInstance().getUsuarioActual();
         return usuario instanceof Docente;
     }
-    
+      
     private void configurarTabla(){
         // TABLA DE PENDIENTES
         modeloPendientes.addColumn("ID de Tarea");
@@ -46,7 +53,7 @@ public class ListaPendiente extends javax.swing.JPanel {
         // Obtener usuario actual
         Estudiante estudiante = (Estudiante) AppContext.getInstance().getUsuarioActual();
 
-        // Obtener cursos segun el rol
+        // Obtener pendientes
         ArrayList<TareaAsignada> listaPendientes = 
             AppContext.getTareaAsignadaController().obtenerPendientesEstudiantePorID(estudiante.getIdEstudiante());
 
@@ -143,6 +150,7 @@ public class ListaPendiente extends javax.swing.JPanel {
         // Obtenemos la fila seleccionada
         int fila = tablaPendientes.getSelectedRow();
 
+        // 
         if (fila == -1) {
             AlertUtils.showWarning("Debes seleccionar un registro de la tabla");
             return;
@@ -152,9 +160,9 @@ public class ListaPendiente extends javax.swing.JPanel {
         String id_pendiente = tablaPendientes.getValueAt(fila, 0).toString();
 
         // Mostrar el layout de curso pasando el curso ID
-        LayoutCurso layoutCurso = new LayoutCurso(id_pendiente); 
+        TareaVista panelTarea = new TareaVista(id_pendiente); 
         contentPanel.removeAll();
-        contentPanel.add(layoutCurso);
+        contentPanel.add(panelTarea);
         contentPanel.revalidate();
         contentPanel.repaint();
     }//GEN-LAST:event_btnIrAPendienteActionPerformed

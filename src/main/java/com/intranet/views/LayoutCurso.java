@@ -5,10 +5,12 @@ import javax.swing.JPanel;
 
 public class LayoutCurso extends javax.swing.JPanel {
     private String id_curso;
+    private JPanel contentPanel;
     
-    public LayoutCurso(String id_curso) {
+    public LayoutCurso(String id_curso, JPanel contentPanel) {
         initComponents();
         id_curso = id_curso;
+        contentPanel = contentPanel;
         
         Curso_ContenidoCurso panelContenido = new Curso_ContenidoCurso(id_curso);
         ShowPanel(panelContenido);
@@ -116,7 +118,7 @@ public class LayoutCurso extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGoContenidoActionPerformed
 
     private void btnGoEntregasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoEntregasActionPerformed
-        Curso_Entregas panelEntregas = new Curso_Entregas(id_curso);
+        Curso_Entregas panelEntregas = new Curso_Entregas(id_curso, contentPanel);
         ShowPanel(panelEntregas);
     }//GEN-LAST:event_btnGoEntregasActionPerformed
 
@@ -126,7 +128,7 @@ public class LayoutCurso extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGoEstudiantesActionPerformed
 
     private void btnGoTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoTareasActionPerformed
-        Curso_Tareas panelTareas = new Curso_Tareas(id_curso);
+        Curso_Tareas panelTareas = new Curso_Tareas(id_curso, contentPanel);
         ShowPanel(panelTareas);
     }//GEN-LAST:event_btnGoTareasActionPerformed
 

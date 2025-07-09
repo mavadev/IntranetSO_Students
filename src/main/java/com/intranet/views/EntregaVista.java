@@ -1,0 +1,241 @@
+package com.intranet.views;
+
+import com.intranet.app.AppContext;
+import com.intranet.models.Curso;
+import com.intranet.models.Docente;
+import com.intranet.models.Estudiante;
+import com.intranet.models.Usuario;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
+public class EntregaVista extends javax.swing.JPanel {
+    DefaultTableModel modeloCursos = new DefaultTableModel();
+
+    public EntregaVista(String id_entrega) {
+        initComponents();
+        obtenerDatosCurso();
+    }
+    
+    private void obtenerDatosCurso(){
+        // Obtener usuario actual
+        Usuario usuario = AppContext.getInstance().getUsuarioActual();
+        ArrayList<Curso> listaCursos = null;
+        
+        // Obtener cursos segun el rol
+        if (usuario instanceof Estudiante) {
+            Estudiante estudiante = (Estudiante) usuario;
+            listaCursos = 
+                AppContext.getCursoController().obtenerCursosPorEstudianteID(estudiante.getIdEstudiante());
+        } else if (usuario instanceof Docente) {
+            Docente docente = (Docente) usuario;
+            listaCursos = 
+                AppContext.getCursoController().obtenerCursosPorDocenteID(docente.getIdDocente());
+        }
+
+        // Limpiar la tabla
+        modeloCursos.setRowCount(0);
+
+        // Insertar cada curso como fila
+        for (Curso curso : listaCursos) {
+            Object[] fila = {
+                curso.getIdCursoDictado(),
+                curso.getNombre(),
+                curso.getDescripcion(),
+                curso.getAula(),
+                curso.getHorario(),
+                curso.getModalidad()
+            };
+            modeloCursos.addRow(fila);
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        lblDescripcionTarea = new javax.swing.JLabel();
+        lblTituloTarea = new javax.swing.JLabel();
+        lblFechaAsignacion = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblNombreCurso = new javax.swing.JLabel();
+        lblNombreDocente = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        lblGradoEstudiante = new javax.swing.JLabel();
+        lblNombreEstudiante = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtComentarioEstudiante = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        lblFechaEntrega = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtObservacionProfesor = new javax.swing.JTextArea();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        lblCalificacionEntrega = new javax.swing.JLabel();
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1054, 720));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "TAREA DEL CURSO", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(740, 380));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblDescripcionTarea.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblDescripcionTarea.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDescripcionTarea.setText("Brazil is going head to head with Paraguay starting on 11 Jun 2025 at 00:45 UTC at Neo Química Arena stadium, São Paulo city, Brazil. The match is a part of the World Cup Qualification, CONMEBOL.Brazil is going head to head with Paraguay starting on 11 Jun 2025 at 00:45 UTC at Neo Química Arena stadium, São Paulo city, Brazil. The match is a part of the World Cup Qualification, CONMEBOL."); // NOI18N
+        lblDescripcionTarea.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblDescripcionTarea.setAutoscrolls(true);
+        lblDescripcionTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblDescripcionTarea.setDisplayedMnemonicIndex(3);
+        lblDescripcionTarea.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lblDescripcionTarea.setIconTextGap(0);
+        lblDescripcionTarea.setInheritsPopupMenu(false);
+        lblDescripcionTarea.setName(""); // NOI18N
+        lblDescripcionTarea.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanel3.add(lblDescripcionTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 410, 210));
+
+        lblTituloTarea.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTituloTarea.setText("Poesia por el Dia del Padre");
+        jPanel3.add(lblTituloTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 410, -1));
+
+        lblFechaAsignacion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblFechaAsignacion.setText("24/11/2003");
+        jPanel3.add(lblFechaAsignacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 620, 80, 20));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setText("Instrucciones de la actividad");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 410, 20));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Fecha de Asignación");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 600, 410, 20));
+
+        lblNombreCurso.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombreCurso.setText("Comunicacion");
+        jPanel3.add(lblNombreCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 620, 90, 20));
+
+        lblNombreDocente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNombreDocente.setText("Serruchin Requena");
+        jPanel3.add(lblNombreDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 600, 140, 20));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img_default_avatar.png"))); // NOI18N
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, -1, -1));
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "ENTREGA DEL CURSO", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel4.setPreferredSize(new java.awt.Dimension(740, 380));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel11.setText("Entregable del Curso");
+        jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 270, -1));
+
+        lblGradoEstudiante.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblGradoEstudiante.setText("3er Grado");
+        jPanel4.add(lblGradoEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 610, 170, 20));
+
+        lblNombreEstudiante.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblNombreEstudiante.setText("Gianmarco Chistama");
+        jPanel4.add(lblNombreEstudiante, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 590, 180, 20));
+
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img_default_avatar.png"))); // NOI18N
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, -1, -1));
+
+        txtComentarioEstudiante.setColumns(20);
+        txtComentarioEstudiante.setRows(5);
+        txtComentarioEstudiante.setEnabled(false);
+        jScrollPane1.setViewportView(txtComentarioEstudiante);
+
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 400, 210));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Fecha de Entrega");
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 590, 410, -1));
+
+        lblFechaEntrega.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblFechaEntrega.setText("24/11/2003");
+        jPanel4.add(lblFechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 610, 80, -1));
+
+        txtObservacionProfesor.setColumns(20);
+        txtObservacionProfesor.setRows(5);
+        txtObservacionProfesor.setEnabled(false);
+        jScrollPane2.setViewportView(txtObservacionProfesor);
+
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 400, 140));
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setText("Comentario del Docente");
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 410, 20));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Mensaje de Entrega");
+        jPanel4.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 410, 20));
+
+        lblCalificacionEntrega.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblCalificacionEntrega.setText("00 / 20");
+        jPanel4.add(lblCalificacionEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 60, 50));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 479, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1095, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblCalificacionEntrega;
+    private javax.swing.JLabel lblDescripcionTarea;
+    private javax.swing.JLabel lblFechaAsignacion;
+    private javax.swing.JLabel lblFechaEntrega;
+    private javax.swing.JLabel lblGradoEstudiante;
+    private javax.swing.JLabel lblNombreCurso;
+    private javax.swing.JLabel lblNombreDocente;
+    private javax.swing.JLabel lblNombreEstudiante;
+    private javax.swing.JLabel lblTituloTarea;
+    private javax.swing.JTextArea txtComentarioEstudiante;
+    private javax.swing.JTextArea txtObservacionProfesor;
+    // End of variables declaration//GEN-END:variables
+}

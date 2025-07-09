@@ -184,12 +184,12 @@ public class LayoutPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCursosActionPerformed
 
     private void btnPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPendientesActionPerformed
-        ListaPendiente panelPendientes = new ListaPendiente(content);
+        ListaPendientes panelPendientes = new ListaPendientes(content);
         ShowPanel(panelPendientes);
     }//GEN-LAST:event_btnPendientesActionPerformed
 
     private void btnCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCuentaActionPerformed
-        MiCuenta panelCuenta = new MiCuenta(content);
+        MiCuenta panelCuenta = new MiCuenta();
         ShowPanel(panelCuenta);
     }//GEN-LAST:event_btnCuentaActionPerformed
 

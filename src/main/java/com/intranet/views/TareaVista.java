@@ -1,54 +1,16 @@
 package com.intranet.views;
 
-import com.intranet.app.AppContext;
-import com.intranet.models.Curso;
-import com.intranet.models.Docente;
-import com.intranet.models.Estudiante;
-import com.intranet.models.Usuario;
-import com.intranet.utils.AlertUtils;
-import java.util.ArrayList;
-import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
+public class TareaVista extends javax.swing.JPanel {
 
-public class Tarea extends javax.swing.JPanel {
-    DefaultTableModel modeloCursos = new DefaultTableModel();
-
-    public Tarea() {
+    public TareaVista(String id_tarea) {
         initComponents();
-        obtenerDatosCurso();
+        obtenerDatosTarea();
     }
     
-    private void obtenerDatosCurso(){
-        // Obtener usuario actual
-        Usuario usuario = AppContext.getInstance().getUsuarioActual();
-        ArrayList<Curso> listaCursos = null;
+    private void obtenerDatosTarea(){
+        // Obtener datos de su tarea
         
-        // Obtener cursos segun el rol
-        if (usuario instanceof Estudiante) {
-            Estudiante estudiante = (Estudiante) usuario;
-            listaCursos = 
-                AppContext.getCursoController().obtenerCursosPorEstudianteID(estudiante.getIdEstudiante());
-        } else if (usuario instanceof Docente) {
-            Docente docente = (Docente) usuario;
-            listaCursos = 
-                AppContext.getCursoController().obtenerCursosPorDocenteID(docente.getIdDocente());
-        }
-
-        // Limpiar la tabla
-        modeloCursos.setRowCount(0);
-
-        // Insertar cada curso como fila
-        for (Curso curso : listaCursos) {
-            Object[] fila = {
-                curso.getIdCursoDictado(),
-                curso.getNombre(),
-                curso.getDescripcion(),
-                curso.getAula(),
-                curso.getHorario(),
-                curso.getModalidad()
-            };
-            modeloCursos.addRow(fila);
-        }
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -175,11 +137,11 @@ public class Tarea extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 680, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

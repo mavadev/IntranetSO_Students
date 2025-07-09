@@ -62,10 +62,12 @@ public class Dashboard extends javax.swing.JPanel {
         
         // Obtener cursos segun el rol
         if (usuario instanceof Estudiante) {
+            lblRolUsuario.setText("Estudiante");
             Estudiante estudiante = (Estudiante) usuario;
             listaCursos = 
                 AppContext.getCursoController().obtenerCursosPorEstudianteID(estudiante.getIdEstudiante());
         } else if (usuario instanceof Docente) {
+            lblRolUsuario.setText("Docente");
             Docente docente = (Docente) usuario;
             listaCursos = 
                 AppContext.getCursoController().obtenerCursosPorDocenteID(docente.getIdDocente());
@@ -117,7 +119,7 @@ public class Dashboard extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lblRolUsuario = new javax.swing.JLabel();
         lblDiaActual = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -129,14 +131,14 @@ public class Dashboard extends javax.swing.JPanel {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1054, 720));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel6.setText("Docente");
+        lblRolUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblRolUsuario.setText("Estudiante");
 
         lblDiaActual.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblDiaActual.setText("Martes 14 de Julio");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel8.setText("Hola, Juan Carlos");
+        jLabel8.setText("Bienvenido, Juan Carlos");
 
         tablaProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -180,7 +182,7 @@ public class Dashboard extends javax.swing.JPanel {
                     .addComponent(jLabel8)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel6))
+                    .addComponent(lblRolUsuario))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,7 +200,7 @@ public class Dashboard extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(104, 104, 104)
-                        .addComponent(jLabel6)
+                        .addComponent(lblRolUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -234,13 +236,13 @@ public class Dashboard extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblDiaActual;
+    private javax.swing.JLabel lblRolUsuario;
     private javax.swing.JLabel lblTablaProfesores;
     private javax.swing.JTable tablaCursos;
     private javax.swing.JTable tablaProfesores;
