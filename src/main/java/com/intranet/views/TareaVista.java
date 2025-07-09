@@ -1,16 +1,40 @@
 package com.intranet.views;
 
-public class TareaVista extends javax.swing.JPanel {
+import com.intranet.utils.Format;
+import com.intranet.app.AppContext;
+import com.intranet.models.Estudiante;
+import com.intranet.models.TareaAsignada;
+import com.intranet.utils.AlertUtils;
+import javax.swing.JPanel;
 
-    public TareaVista(String id_tarea) {
+public class TareaVista extends javax.swing.JPanel {
+    private String id_tarea;
+    private JPanel contentPanel;
+    
+    public TareaVista(String id_tarea, JPanel contentPanel) {
         initComponents();
+        id_tarea = id_tarea;
+        contentPanel = contentPanel;
+        
         obtenerDatosTarea();
     }
     
     private void obtenerDatosTarea(){
+        // Obtener usuario actual
+        Estudiante estudiante = (Estudiante) AppContext.getInstance().getUsuarioActual();
+
         // Obtener datos de su tarea
+        TareaAsignada tarea = AppContext.getTareaAsignadaController().obtenerTareaPorID(id_tarea);
         
+        // Asignar datos a los campos
+        lblTituloTarea.setText(tarea.getTituloTarea());
+        lblDescripcionTarea.setText(tarea.getDescripcion());
+        lblNombreDocente.setText(tarea.getDocente());
+        lblNombreCurso.setText(tarea.getNombreCurso());
         
+        // Datos del usuario
+        lblNombreEstudiante.setText(estudiante.getNombres() + " " + estudiante.getApellidos());
+        lblGradoEstudiante.setText(Format.numGradoToStrGrado(estudiante.getNumeroGrado()));
     }
     
     @SuppressWarnings("unchecked")
@@ -90,7 +114,7 @@ public class TareaVista extends javax.swing.JPanel {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setText("Entregable del Curso");
+        jLabel11.setText("Entrega del Curso:");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 410, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -121,6 +145,11 @@ public class TareaVista extends javax.swing.JPanel {
 
         btnEntregarTarea.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEntregarTarea.setText("ENTREGAR TAREA");
+        btnEntregarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntregarTareaActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnEntregarTarea, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 380, 50));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -155,6 +184,35 @@ public class TareaVista extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 762, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEntregarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntregarTareaActionPerformed
+        // Obtener usuario actual
+        Estudiante estudiante = (Estudiante) AppContext.getInstance().getUsuarioActual();
+        
+        // Obtener valores de formulario
+        String comentarioEstudiante = txtComentarioEstudiante.getText();
+
+        // Validacion de campos generales
+        if (comentarioEstudiante.isEmpty()) {
+            AlertUtils.showWarning("Todos los campos son obligatorios");
+            return;
+        }
+
+        // Obtener resultado de autenticar usuario
+        boolean seRegistro = 
+            AppContext.getInstance().getEntregaController().registrarEntregaTarea(id_tarea, estudiante.getIdEstudiante(), comentarioEstudiante);
+
+        // Redirigir al estudiante en caso se registre su entrega
+       if(seRegistro){
+            AlertUtils.showMessage("Se registró tu entrega de la tarea");
+            Dashboard panelTarea = new Dashboard(); 
+            contentPanel.removeAll();
+            contentPanel.add(panelTarea);
+            contentPanel.revalidate();
+            contentPanel.repaint();
+       }
+        
+    }//GEN-LAST:event_btnEntregarTareaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -78,4 +78,29 @@ public class EntregaController {
         }
         return null;
     }
+    
+    public boolean registrarEntregaTarea(String id_tarea, String id_estudiante, String comentario){
+        // Consulta
+        String query = 
+            "EXEC RegistrarEntregaTarea "
+            + "@id_tarea = ?, "
+            + "@id_estudiante = ?, "
+            + "@comentario = ?;";
+        
+        try (PreparedStatement sttm = conn.prepareStatement(query)) {
+            sttm.setString(1, id_tarea);
+            sttm.setString(2, id_estudiante);
+            sttm.setString(3, comentario);
+            ResultSet rs = sttm.executeQuery();
+            
+            if (rs.next()) {
+                return true;
+            } 
+                
+        } catch (SQLException e) {
+            System.out.println("Error al registrar la entrega: " + e.getMessage());
+            AlertUtils.showWarning("Hubo un error al registrar la entrega");
+        }
+       return false;
+    }
 }

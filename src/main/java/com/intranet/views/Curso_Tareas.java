@@ -3,6 +3,7 @@ package com.intranet.views;
 import com.intranet.app.AppContext;
 import com.intranet.models.Estudiante;
 import com.intranet.models.TareaAsignada;
+import com.intranet.utils.AlertUtils;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -119,7 +120,24 @@ public class Curso_Tareas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIrATareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrATareaActionPerformed
-        
+        // Obtenemos la fila seleccionada
+        int fila = tablaTareas.getSelectedRow();
+
+        //
+        if (fila == -1) {
+            AlertUtils.showWarning("Debes seleccionar un registro de la tabla");
+            return;
+        }
+
+        // Obtener el ID del registro (primera columna)
+        String id_tarea = tablaTareas.getValueAt(fila, 0).toString();
+
+        // Mostrar el layout de curso pasando el curso ID
+        TareaVista panelTarea = new TareaVista(id_tarea, contentPanel);
+        contentPanel.removeAll();
+        contentPanel.add(panelTarea);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }//GEN-LAST:event_btnIrATareaActionPerformed
 
 

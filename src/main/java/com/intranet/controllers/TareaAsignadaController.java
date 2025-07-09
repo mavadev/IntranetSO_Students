@@ -96,9 +96,8 @@ public class TareaAsignadaController {
                     rs.getString("titulo"),
                     rs.getString("descripcion"),
                     rs.getTimestamp("fecha_entrega").toLocalDateTime(),
-                    rs.getString("nombre_docente"),
-                    rs.getString("apellido_docente"),
-                    rs.getString("especialidad")
+                    rs.getString("nombre_curso"),
+                    rs.getString("nombre_docente") + " " + rs.getString("apellido_docente")
                 );
                 
                 return tarea;

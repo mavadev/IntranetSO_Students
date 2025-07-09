@@ -160,7 +160,7 @@ public class ListaPendientes extends javax.swing.JPanel {
         String id_pendiente = tablaPendientes.getValueAt(fila, 0).toString();
 
         // Mostrar el layout de curso pasando el curso ID
-        TareaVista panelTarea = new TareaVista(id_pendiente); 
+        TareaVista panelTarea = new TareaVista(id_pendiente, contentPanel); 
         contentPanel.removeAll();
         contentPanel.add(panelTarea);
         contentPanel.revalidate();

@@ -7,7 +7,8 @@ public class TareaAsignada {
     private String nombreCurso;
     private String descripcion;
     private boolean entregado;
-    
+    private String docente;
+
     private float calificacion;
     
     private LocalDateTime fechaAsignacion;
@@ -40,6 +41,20 @@ public class TareaAsignada {
         this.fechaAsignacion = fechaAsignacion;
         this.calificacion = calificacion;
     }
+  
+    public TareaAsignada(
+        String titulo,
+        String descripcion,
+        LocalDateTime fechaEntrega,
+        String nombreCurso,
+        String docente
+    ) {
+        this.tituloTarea = titulo;
+        this.descripcion = descripcion;
+        this.fechaEntrega = fechaEntrega;
+        this.nombreCurso = nombreCurso;
+        this.docente = docente;
+    }
     
     public String getIdAsignacion() {
         return idAsignacion;
@@ -64,5 +79,8 @@ public class TareaAsignada {
     }
     public float getCalificacion(){
         return calificacion;
+    }
+    public String getDocente() {
+        return docente;
     }
 }

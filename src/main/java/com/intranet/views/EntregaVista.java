@@ -1,52 +1,39 @@
 package com.intranet.views;
 
 import com.intranet.app.AppContext;
-import com.intranet.models.Curso;
-import com.intranet.models.Docente;
 import com.intranet.models.Estudiante;
-import com.intranet.models.Usuario;
-import java.util.ArrayList;
-import javax.swing.table.DefaultTableModel;
+import com.intranet.models.TareaAsignada;
+import com.intranet.utils.Format;
+import javax.swing.JPanel;
 
 public class EntregaVista extends javax.swing.JPanel {
-    DefaultTableModel modeloCursos = new DefaultTableModel();
+    private String id_tarea;
+    private JPanel contentPanel;
 
     public EntregaVista(String id_entrega) {
         initComponents();
-        obtenerDatosCurso();
+        id_tarea = id_tarea;
+        contentPanel = contentPanel;
+
+        obtenerDatosEntrega();
     }
     
-    private void obtenerDatosCurso(){
+    private void obtenerDatosEntrega(){
         // Obtener usuario actual
-        Usuario usuario = AppContext.getInstance().getUsuarioActual();
-        ArrayList<Curso> listaCursos = null;
+        Estudiante estudiante = (Estudiante) AppContext.getInstance().getUsuarioActual();
         
-        // Obtener cursos segun el rol
-        if (usuario instanceof Estudiante) {
-            Estudiante estudiante = (Estudiante) usuario;
-            listaCursos = 
-                AppContext.getCursoController().obtenerCursosPorEstudianteID(estudiante.getIdEstudiante());
-        } else if (usuario instanceof Docente) {
-            Docente docente = (Docente) usuario;
-            listaCursos = 
-                AppContext.getCursoController().obtenerCursosPorDocenteID(docente.getIdDocente());
-        }
-
-        // Limpiar la tabla
-        modeloCursos.setRowCount(0);
-
-        // Insertar cada curso como fila
-        for (Curso curso : listaCursos) {
-            Object[] fila = {
-                curso.getIdCursoDictado(),
-                curso.getNombre(),
-                curso.getDescripcion(),
-                curso.getAula(),
-                curso.getHorario(),
-                curso.getModalidad()
-            };
-            modeloCursos.addRow(fila);
-        }
+        // Obtener datos de su tarea
+        TareaAsignada tarea = AppContext.getTareaAsignadaController().obtenerTareaPorID(id_tarea);
+        
+        // Asignar datos a los campos
+        lblTituloTarea.setText(tarea.getTituloTarea());
+        lblDescripcionTarea.setText(tarea.getDescripcion());
+        lblNombreDocente.setText(tarea.getDocente());
+        lblNombreCurso.setText(tarea.getNombreCurso());
+        
+        // Datos del usuario
+        lblNombreEstudiante.setText(estudiante.getNombres() + " " + estudiante.getApellidos());
+        lblGradoEstudiante.setText(Format.numGradoToStrGrado(estudiante.getNumeroGrado()));
     }
     
     @SuppressWarnings("unchecked")
@@ -167,7 +154,7 @@ public class EntregaVista extends javax.swing.JPanel {
         jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 400, 140));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setText("Comentario del Docente");
+        jLabel15.setText("Observación del Docente");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 410, 20));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
