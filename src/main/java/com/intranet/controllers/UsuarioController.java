@@ -2,7 +2,11 @@ package com.intranet.controllers;
 
 import com.intranet.db.DBConnection;
 import com.intranet.models.Usuario;
+import com.intranet.models.Estudiante;
+import com.intranet.models.Docente;
+
 import com.intranet.utils.AlertUtils;
+import com.intranet.utils.PasswordUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,47 +20,85 @@ public class UsuarioController {
         this.conn = db.getConexion();
     }
     
-    public Usuario login(String correo, String contraseña) {
-        String sql = "SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?";
+    public Usuario login(String correo, String contraseña, String rol) {
+        // OBTENER USUARIO POR CORREO
+        String queryUsuario = 
+            "SELECT id_usuario, password FROM Usuario WHERE email = ? AND rol = ?;";
         
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, correo);
-            stmt.setString(2, contraseña);
-            ResultSet rs = stmt.executeQuery();
+        // OBTENER DATOS DE DOCENTE 
+        String queryDocente = 
+            "SELECT id_docente, nombres, apellidos, dni, celular, direccion, especialidad "
+            + "FROM Docente WHERE id_usuario = ?;";
+        
+        // OBTENER DATOS DE ESTUDIANTE 
+        String queryEstudiante = 
+            "SELECT e.id_estudiante, e.nombres, e.apellidos, e.dni, e.direccion, g.numero_grado AS num_grado "
+            + "FROM Estudiante e "
+            + "JOIN Grado_Seccion gs ON gs.id_grado_seccion = e.id_grado_seccion "
+            + "JOIN Grado g ON g.id_grado = gs.id_grado "
+            + "WHERE id_usuario = ?;";
+
+        try (PreparedStatement sttm = conn.prepareStatement(queryUsuario)) {
+            sttm.setString(1, correo);
+            sttm.setString(2, rol);
+
+            ResultSet rs = sttm.executeQuery();
             
-            if (rs.next()) {
-                return new Usuario(
-                    rs.getInt("id"),
-                    rs.getString("nombre"),
-                    rs.getString("apellido"),
-                    rs.getString("correo"),
-                    rs.getString("contraseña"),
-                    rs.getString("rol"),
-                    rs.getTimestamp("creado_en").toLocalDateTime()
-                );
+            if (!rs.next()) {
+                AlertUtils.showWarning("Correo no registrado a un usuario");
+                return null;
+            } 
+            
+            // Obtener datos de un usuario
+            String hashedPasswordDB = rs.getString("password");
+            String id_usuario = rs.getString("id_usuario");
+
+            // No coincide las contraseñas
+            if (!PasswordUtils.checkPassword(contraseña, hashedPasswordDB)) {
+                AlertUtils.showWarning("Contraseña incorrecta");
+                return null;
             }
             
-        } catch (SQLException e) {
-            System.out.println("Error al hacer login: " + e.getMessage());
-            AlertUtils.showWarning("Hubo un error al crear el usuario");
-        }
-        return null;
-    }
+            // Query para consulta
+            String queryFind = rol == "docente" ? queryDocente : queryEstudiante;
+            
+            try (PreparedStatement sttmAdmin  = conn.prepareStatement(queryFind)) {
+                sttm.setString(1, id_usuario);
+                ResultSet rsAdmin = sttmAdmin.executeQuery();
 
-    public boolean register(Usuario usuario) {
-        String sql = "INSERT INTO usuarios (nombre, apellido, correo, contraseña, rol) VALUES (?, ?, ?, ?, ?)";
-        
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, usuario.getNombre());
-            stmt.setString(2, usuario.getApellido());
-            stmt.setString(3, usuario.getCorreo());
-            stmt.setString(4, usuario.getContraseña());
-            stmt.setString(5, usuario.getRol());
-            stmt.executeUpdate();
-            return true;
+                if (rsAdmin.next()) {
+                    if (rol.equals("estudiante")) {
+                        return new Estudiante(
+                            correo,
+                            rs.getString("id_estudiante"),
+                            rs.getString("nombres"),
+                            rs.getString("apellidos"),
+                            rs.getString("dni"),
+                            rs.getString("direccion"),
+                            rs.getInt("num_grado")
+                        );
+                    } else if (rol.equals("docente")) {
+                        return new Docente(
+                            correo,
+                            rs.getString("id_docente"),
+                            rs.getString("nombres"),
+                            rs.getString("apellidos"),
+                            rs.getString("dni"),
+                            rs.getString("celular"),
+                            rs.getString("direccion"),
+                            rs.getString("especialidad")
+                        );
+                    }
+                } else {
+                    AlertUtils.showWarning("No se encontró el usuario");
+                }
+            } 
+                
         } catch (SQLException e) {
-            System.out.println("Error al registrar usuario: " + e.getMessage());
-            return false;
+            System.out.println("Error al iniciar sesión: " + e.getMessage());
+            AlertUtils.showWarning("Hubo un error al iniciar sesión");
         }
+        
+        return null;
     }
 }
